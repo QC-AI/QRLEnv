@@ -32,7 +32,7 @@ RUN conda update -y conda
 RUN conda init
 
 COPY environment.yml /work
-#RUN conda env create -f environment.yml
-#RUN rm environment.yml
+RUN conda env create -f environment.yml
+RUN rm environment.yml
 
 WORKDIR /work
