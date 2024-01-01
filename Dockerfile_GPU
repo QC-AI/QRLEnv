@@ -31,8 +31,12 @@ ENV PATH=/opt/conda/bin:${PATH}
 RUN conda update -y conda
 RUN conda init
 
-COPY environment.yml /work
-#RUN conda env create -f environment.yml
-#RUN rm environment.yml
+#COPY environment.yml /work
+RUN conda create --name=qrl python=3.9.5 -y 
+SHELL ["conda", "run", "-n", "qrl", "/bin/bash", "-c"]
+#RUN conda activate qrl
+RUN conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.6 -c pytorch -c nvidia -y && \
+    yes | pip install pennylane-lightning[gpu] && \
+    yes | pip install pandas matplotlib tensorboard gymnasium tianshou
 
 WORKDIR /work
